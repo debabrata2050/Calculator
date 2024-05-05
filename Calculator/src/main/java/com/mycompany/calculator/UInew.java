@@ -4,25 +4,33 @@ import java.awt.Color;
 
 public class UInew extends javax.swing.JFrame {
 
-    private float num1 = Float.MIN_VALUE, num2 = Float.MIN_VALUE;
+    private double num1 = Float.MIN_VALUE, num2 = Float.MIN_VALUE;
     char operators = 'n';
+    boolean opUse = false;
     
     public UInew() {
         initComponents();
         label(0);
     }
     
-    public void label(int v){
-        if(v == 0)
+//To View/Hide Upper Label
+    public void label(int arg){
+        if(arg == 0)
             display_lb2.setVisible(false);
         else
             display_lb2.setVisible(true);
     }
     
+ //To get text from Result Label   
     public String disp(){
         return display_lb.getText();
     }
+    
+ // To display any number or dot(.)
     public void dispNum(String number){
+        if(opUse == true){
+            clear();
+        }
         if(number.equals(".")){
             display_lb.setText(disp()+number);
         }
@@ -32,37 +40,64 @@ public class UInew extends javax.swing.JFrame {
         else{
             display_lb.setText(disp()+number);
         }
+        opUse = false;
     }
+    
+    //Reset Value of num 1 and num 2
+    public void resetValues(int arg){
+        switch (arg) {
+            case 1 -> num1 = Float.MIN_VALUE;
+            case 2 -> num2 = Float.MIN_VALUE;
+            default -> {
+                num1 = Float.MIN_VALUE;
+                num2 = Float.MIN_VALUE;
+            }
+        }
+    }
+    
+    //Reset Value of Result Display
     public void clear(){
         display_lb.setText("0");
-        num1 = Float.MIN_VALUE;
-        num2 = Float.MIN_VALUE;
     }
     
+    // To clear input
     public void cBack(){
-        String res = display_lb.getText();
-        if(res.length()==1){
-            res = "0";
-        }
-        else{
-            res = res.substring(0,res.length()-1);
-        }
-        display_lb.setText(res);
+            String res = display_lb.getText();
+            if(res.length()==1){
+                res = "0";
+            }
+            else{
+                res = res.substring(0,res.length()-1);
+            }
+            display_lb.setText(res);
     }
     
+    //To get input for num1 and operator
     public void operator(char op){
-        label(1);
-        if(num1==Float.MIN_VALUE)
-        {
-            num1 = Float.parseFloat(disp());
-        }
-        operators = op;
-        display_lb2.setText(num1+" "+op);
-        //clear();
+        
+            label(1);
+            if(num1==Float.MIN_VALUE)
+            {
+                num1 = Float.parseFloat(disp());
+            }
+            operators = op;
+            String numb1 = Double.toString(num1);
+            numb1 = operation.removeDot(numb1);
+
+            display_lb2.setText(numb1+" "+op);
+            resetValues(2);
+        
+        opUse = true;
     }
+    
+    //Equal Operator
     public void equalOp(){
-        num2 = Float.parseFloat(disp());
-        float res = 0;
+        if(num2==Float.MIN_VALUE)
+        {
+            num2 = Float.parseFloat(disp());
+        }
+        
+        double res = 0;
         switch(operators){
             case '+' -> res=num1+num2;
             case '-' -> res=num1-num2;
@@ -70,16 +105,18 @@ public class UInew extends javax.swing.JFrame {
             case '/' -> res=num1/num2;
         }
         
-        String result = Float.toString(res);
-        int r = result.indexOf(".0");
-        if(r != -1){
-            result = result.substring(0,r);
-        }
-        display_lb2.setText(display_lb2.getText()+" "+num2);
+        String result = Double.toString(res);
+        result = operation.removeDot(result);
+        
+        String numb1 = Double.toString(num1);
+        numb1=operation.removeDot(numb1);
+        String numb2 = Double.toString(num2);
+        numb2=operation.removeDot(numb2);
+        
+        display_lb2.setText(numb1+" "+operators+" "+numb2);
         clear();
         dispNum(result);
         num1=res;
-        
     }
 
     @SuppressWarnings("unchecked")
@@ -153,7 +190,7 @@ public class UInew extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(46, 47, 62));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("0");
@@ -197,7 +234,7 @@ public class UInew extends javax.swing.JFrame {
         jPanel6.setBackground(new java.awt.Color(46, 47, 62));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel21.setText("2");
@@ -219,7 +256,7 @@ public class UInew extends javax.swing.JFrame {
         jPanel8.setBackground(new java.awt.Color(46, 47, 62));
         jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("1");
@@ -241,7 +278,7 @@ public class UInew extends javax.swing.JFrame {
         jPanel9.setBackground(new java.awt.Color(46, 47, 62));
         jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(255, 255, 255));
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("3");
@@ -263,7 +300,7 @@ public class UInew extends javax.swing.JFrame {
         jPanel10.setBackground(new java.awt.Color(46, 47, 62));
         jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
         jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel26.setText("6");
@@ -285,7 +322,7 @@ public class UInew extends javax.swing.JFrame {
         jPanel11.setBackground(new java.awt.Color(46, 47, 62));
         jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(255, 255, 255));
         jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel25.setText("5");
@@ -307,7 +344,7 @@ public class UInew extends javax.swing.JFrame {
         jPanel12.setBackground(new java.awt.Color(46, 47, 62));
         jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(255, 255, 255));
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel23.setText("4");
@@ -329,7 +366,7 @@ public class UInew extends javax.swing.JFrame {
         jPanel13.setBackground(new java.awt.Color(54, 55, 70));
         jPanel13.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel30.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel30.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel30.setForeground(new java.awt.Color(255, 255, 255));
         jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel30.setText("+");
@@ -352,7 +389,7 @@ public class UInew extends javax.swing.JFrame {
         jPanel14.setBackground(new java.awt.Color(46, 47, 62));
         jPanel14.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("9");
@@ -374,7 +411,7 @@ public class UInew extends javax.swing.JFrame {
         jPanel15.setBackground(new java.awt.Color(46, 47, 62));
         jPanel15.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("8");
@@ -396,7 +433,7 @@ public class UInew extends javax.swing.JFrame {
         jPanel16.setBackground(new java.awt.Color(46, 47, 62));
         jPanel16.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel27.setForeground(new java.awt.Color(255, 255, 255));
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel27.setText("7");
@@ -418,7 +455,7 @@ public class UInew extends javax.swing.JFrame {
         jPanel17.setBackground(new java.awt.Color(54, 55, 70));
         jPanel17.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel32.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel32.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(255, 255, 255));
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel32.setText("-");
@@ -531,7 +568,7 @@ public class UInew extends javax.swing.JFrame {
         display_lb.setText("0");
         jPanel2.add(display_lb, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 260, 50));
 
-        display_lb2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        display_lb2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         display_lb2.setForeground(new java.awt.Color(255, 255, 255));
         display_lb2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         display_lb2.setText("0");
@@ -707,10 +744,11 @@ operation.num_resetcolor(jPanel21);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel31MouseExited
 
     private void jLabel31MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel31MouseClicked
-cBack();        // TODO add your handling code here:
+cBack();
     }//GEN-LAST:event_jLabel31MouseClicked
 
     private void jLabel24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MouseClicked
+resetValues(0);
 clear();
 label(0);
     }//GEN-LAST:event_jLabel24MouseClicked
