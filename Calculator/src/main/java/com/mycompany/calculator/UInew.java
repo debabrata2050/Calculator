@@ -4,119 +4,124 @@ import java.awt.Color;
 
 public class UInew extends javax.swing.JFrame {
 
-    private double num1 = Float.MIN_VALUE, num2 = Float.MIN_VALUE;
+    private double num1 = Double.MIN_VALUE, num2 = Double.MIN_VALUE;
     char operators = 'n';
     boolean opUse = false;
-    
+
     public UInew() {
         initComponents();
         label(0);
     }
-    
+
 //To View/Hide Upper Label
-    public void label(int arg){
-        if(arg == 0)
+    public void label(int arg) {
+        if (arg == 0) {
             display_lb2.setVisible(false);
-        else
+        } else {
             display_lb2.setVisible(true);
+        }
     }
-    
- //To get text from Result Label   
-    public String disp(){
+
+    //To get text from Result Label   
+    public String disp() {
         return display_lb.getText();
     }
-    
- // To display any number or dot(.)
-    public void dispNum(String number){
-        if(opUse == true){
+
+    // To display any number or dot(.)
+    public void dispNum(String number) {
+        if (opUse == true) {
             clear();
         }
-        if(number.equals(".")){
-            display_lb.setText(disp()+number);
-        }
-        else if(disp().equals("0")){
+       
+        if (number.equals(".")) {
+            display_lb.setText(disp() + number);
+        } else if (disp().equals("0")) {
             display_lb.setText(number);
-        }
-        else{
-            display_lb.setText(disp()+number);
+        } else {
+            display_lb.setText(disp() + number);
         }
         opUse = false;
     }
-    
+
     //Reset Value of num 1 and num 2
-    public void resetValues(int arg){
+    public void resetValues(int arg) {
         switch (arg) {
-            case 1 -> num1 = Float.MIN_VALUE;
-            case 2 -> num2 = Float.MIN_VALUE;
+            case 1 ->
+                num1 = Double.MIN_VALUE;
+            case 2 ->
+                num2 = Double.MIN_VALUE;
             default -> {
-                num1 = Float.MIN_VALUE;
-                num2 = Float.MIN_VALUE;
+                num1 = Double.MIN_VALUE;
+                num2 = Double.MIN_VALUE;
+                operators =  'n';
             }
         }
     }
-    
+
     //Reset Value of Result Display
-    public void clear(){
+    public void clear() {
         display_lb.setText("0");
     }
-    
+
     // To clear input
-    public void cBack(){
-            String res = display_lb.getText();
-            if(res.length()==1){
-                res = "0";
-            }
-            else{
-                res = res.substring(0,res.length()-1);
-            }
-            display_lb.setText(res);
+    public void cBack() {
+        String res = display_lb.getText();
+        if (res.length() == 1) {
+            res = "0";
+        } else {
+            res = res.substring(0, res.length() - 1);
+        }
+        display_lb.setText(res);
     }
-    
+
     //To get input for num1 and operator
-    public void operator(char op){
-        
-            label(1);
-            if(num1==Float.MIN_VALUE)
-            {
-                num1 = Float.parseFloat(disp());
+    public void operator(char op) {
+        label(1);
+
+       
+            if (num1 == Double.MIN_VALUE) {
+                num1 = Double.parseDouble(disp());
             }
             operators = op;
             String numb1 = Double.toString(num1);
             numb1 = operation.removeDot(numb1);
 
-            display_lb2.setText(numb1+" "+op);
+            display_lb2.setText(numb1 + " " + op);
             resetValues(2);
+            opUse = true;
         
-        opUse = true;
     }
-    
+
     //Equal Operator
-    public void equalOp(){
-        if(num2==Float.MIN_VALUE)
-        {
-            num2 = Float.parseFloat(disp());
+    public void equalOp() {
+        if (num2 == Double.MIN_VALUE) {
+            num2 = Double.parseDouble(disp());
         }
-        
+
         double res = 0;
-        switch(operators){
-            case '+' -> res=num1+num2;
-            case '-' -> res=num1-num2;
-            case '*' -> res=num1*num2;
-            case '/' -> res=num1/num2;
+        switch (operators) {
+            case '+' ->
+                res = num1 + num2;
+            case '-' ->
+                res = num1 - num2;
+            case '*' ->
+                res = num1 * num2;
+            case '/' ->
+                res = num1 / num2;
         }
-        
+
         String result = Double.toString(res);
         result = operation.removeDot(result);
-        
+
         String numb1 = Double.toString(num1);
-        numb1=operation.removeDot(numb1);
+        numb1 = operation.removeDot(numb1);
         String numb2 = Double.toString(num2);
-        numb2=operation.removeDot(numb2);
-        
-        display_lb2.setText(numb1+" "+operators+" "+numb2);
+        numb2 = operation.removeDot(numb2);
+
+        display_lb2.setText(numb1 + " " + operators + " " + numb2);
         clear();
         dispNum(result);
-        num1=res;
+        num1 = res;
     }
 
     @SuppressWarnings("unchecked")
@@ -580,213 +585,213 @@ public class UInew extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseEntered
-operation.num_resetcolor(jPanel4);
+        operation.num_resetcolor(jPanel4);
     }//GEN-LAST:event_jLabel3MouseEntered
 
     private void jLabel3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseExited
-operation.num_setcolor(jPanel4);
+        operation.num_setcolor(jPanel4);
     }//GEN-LAST:event_jLabel3MouseExited
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-dispNum("0");
+        dispNum("0");
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void jLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseEntered
-operation.num_resetcolor(jPanel5);        // TODO add your handling code here:
+        operation.num_resetcolor(jPanel5);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel4MouseEntered
 
     private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
-operation.num_setcolor(jPanel5);
+        operation.num_setcolor(jPanel5);
     }//GEN-LAST:event_jLabel4MouseExited
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-dispNum(".");
+        dispNum(".");
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-dispNum("1");        // TODO add your handling code here:
+        dispNum("1");        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel7MouseClicked
 
     private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
-dispNum("2");        // TODO add your handling code here:
+        dispNum("2");        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel21MouseClicked
 
     private void jLabel22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MouseClicked
-dispNum("3");        // TODO add your handling code here:
+        dispNum("3");        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel22MouseClicked
 
     private void jLabel23MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel23MouseClicked
-dispNum("4");
+        dispNum("4");
     }//GEN-LAST:event_jLabel23MouseClicked
 
     private void jLabel25MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel25MouseClicked
-dispNum("5");        // TODO add your handling code here:
+        dispNum("5");        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel25MouseClicked
 
     private void jLabel26MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel26MouseClicked
-dispNum("6");
+        dispNum("6");
     }//GEN-LAST:event_jLabel26MouseClicked
 
     private void jLabel27MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel27MouseClicked
-dispNum("7");
+        dispNum("7");
     }//GEN-LAST:event_jLabel27MouseClicked
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
-dispNum("8");
+        dispNum("8");
     }//GEN-LAST:event_jLabel8MouseClicked
 
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
-dispNum("9");
+        dispNum("9");
     }//GEN-LAST:event_jLabel9MouseClicked
 
     private void jLabel7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseEntered
-operation.num_resetcolor(jPanel8);
+        operation.num_resetcolor(jPanel8);
     }//GEN-LAST:event_jLabel7MouseEntered
 
     private void jLabel7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseExited
-operation.num_setcolor(jPanel8);
+        operation.num_setcolor(jPanel8);
     }//GEN-LAST:event_jLabel7MouseExited
 
     private void jLabel21MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseEntered
-operation.num_resetcolor(jPanel6);
+        operation.num_resetcolor(jPanel6);
     }//GEN-LAST:event_jLabel21MouseEntered
 
     private void jLabel21MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseExited
-operation.num_setcolor(jPanel6);
+        operation.num_setcolor(jPanel6);
     }//GEN-LAST:event_jLabel21MouseExited
 
     private void jLabel22MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MouseEntered
-operation.num_resetcolor(jPanel9);        // TODO add your handling code here:
+        operation.num_resetcolor(jPanel9);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel22MouseEntered
 
     private void jLabel22MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MouseExited
-operation.num_setcolor(jPanel9);        // TODO add your handling code here:
+        operation.num_setcolor(jPanel9);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel22MouseExited
 
     private void jLabel23MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel23MouseEntered
-operation.num_resetcolor(jPanel12);        // TODO add your handling code here:
+        operation.num_resetcolor(jPanel12);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel23MouseEntered
 
     private void jLabel23MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel23MouseExited
-operation.num_setcolor(jPanel12);
+        operation.num_setcolor(jPanel12);
     }//GEN-LAST:event_jLabel23MouseExited
 
     private void jLabel25MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel25MouseEntered
-operation.num_resetcolor(jPanel11);        // TODO add your handling code here:
+        operation.num_resetcolor(jPanel11);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel25MouseEntered
 
     private void jLabel25MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel25MouseExited
-operation.num_setcolor(jPanel11);        // TODO add your handling code here:
+        operation.num_setcolor(jPanel11);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel25MouseExited
 
     private void jLabel26MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel26MouseEntered
-operation.num_resetcolor(jPanel10);        // TODO add your handling code here:
+        operation.num_resetcolor(jPanel10);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel26MouseEntered
 
     private void jLabel26MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel26MouseExited
-operation.num_setcolor(jPanel10);
+        operation.num_setcolor(jPanel10);
     }//GEN-LAST:event_jLabel26MouseExited
 
     private void jLabel27MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel27MouseEntered
-operation.num_resetcolor(jPanel16);        // TODO add your handling code here:
+        operation.num_resetcolor(jPanel16);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel27MouseEntered
 
     private void jLabel27MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel27MouseExited
-operation.num_setcolor(jPanel16);        // TODO add your handling code here:
+        operation.num_setcolor(jPanel16);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel27MouseExited
 
     private void jLabel8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseEntered
-operation.num_resetcolor(jPanel15);        // TODO add your handling code here:
+        operation.num_resetcolor(jPanel15);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel8MouseEntered
 
     private void jLabel8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseExited
-operation.num_setcolor(jPanel15);        // TODO add your handling code here:
+        operation.num_setcolor(jPanel15);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel8MouseExited
 
     private void jLabel9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseEntered
-operation.num_resetcolor(jPanel14);        // TODO add your handling code here:
+        operation.num_resetcolor(jPanel14);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel9MouseEntered
 
     private void jLabel9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseExited
-operation.num_setcolor(jPanel14);        // TODO add your handling code here:
+        operation.num_setcolor(jPanel14);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel9MouseExited
 
     private void jLabel24MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MouseEntered
-operation.num_setcolor(jPanel20);
+        operation.num_setcolor(jPanel20);
     }//GEN-LAST:event_jLabel24MouseEntered
 
     private void jLabel24MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MouseExited
-operation.num_resetcolor(jPanel20);        // TODO add your handling code here:
+        operation.num_resetcolor(jPanel20);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel24MouseExited
 
     private void jLabel28MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel28MouseEntered
-operation.num_setcolor(jPanel19);        // TODO add your handling code here:
+        operation.num_setcolor(jPanel19);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel28MouseEntered
 
     private void jLabel28MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel28MouseExited
-operation.num_resetcolor(jPanel19);        // TODO add your handling code here:
+        operation.num_resetcolor(jPanel19);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel28MouseExited
 
     private void jLabel29MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel29MouseEntered
-operation.num_setcolor(jPanel18);        // TODO add your handling code here:
+        operation.num_setcolor(jPanel18);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel29MouseEntered
 
     private void jLabel29MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel29MouseExited
-operation.num_resetcolor(jPanel18);        // TODO add your handling code here:
+        operation.num_resetcolor(jPanel18);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel29MouseExited
 
     private void jLabel31MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel31MouseEntered
-operation.num_setcolor(jPanel21);        // TODO add your handling code here:
+        operation.num_setcolor(jPanel21);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel31MouseEntered
 
     private void jLabel31MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel31MouseExited
-operation.num_resetcolor(jPanel21);        // TODO add your handling code here:
+        operation.num_resetcolor(jPanel21);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel31MouseExited
 
     private void jLabel31MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel31MouseClicked
-cBack();
+        cBack();
     }//GEN-LAST:event_jLabel31MouseClicked
 
     private void jLabel24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MouseClicked
-resetValues(0);
-clear();
-label(0);
+        resetValues(0);
+        clear();
+        label(0);
     }//GEN-LAST:event_jLabel24MouseClicked
 
     private void jLabel32MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel32MouseEntered
-operation.num_setcolor(jPanel17);        // TODO add your handling code here:
+        operation.num_setcolor(jPanel17);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel32MouseEntered
 
     private void jLabel32MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel32MouseExited
-operation.num_resetcolor(jPanel17);        // TODO add your handling code here:
+        operation.num_resetcolor(jPanel17);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel32MouseExited
 
     private void jLabel30MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel30MouseEntered
-operation.num_setcolor(jPanel13);        // TODO add your handling code here:
+        operation.num_setcolor(jPanel13);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel30MouseEntered
 
     private void jLabel30MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel30MouseExited
-operation.num_resetcolor(jPanel13);        // TODO add your handling code here:
+        operation.num_resetcolor(jPanel13);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel30MouseExited
 
     private void jLabel28MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel28MouseClicked
-operator('/');
+        operator('/');
     }//GEN-LAST:event_jLabel28MouseClicked
 
     private void jLabel29MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel29MouseClicked
-operator('*');        // TODO add your handling code here:
+        operator('*');        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel29MouseClicked
 
     private void jLabel32MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel32MouseClicked
-operator('-');        // TODO add your handling code here:
+        operator('-');        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel32MouseClicked
 
     private void jLabel30MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel30MouseClicked
-operator('+');        // TODO add your handling code here:
+        operator('+');        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel30MouseClicked
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-equalOp();        // TODO add your handling code here:
+        equalOp();        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel1MouseClicked
 
     public static void main(String args[]) {
