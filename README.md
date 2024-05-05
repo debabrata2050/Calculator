@@ -9,4 +9,5 @@ It allows users to perform basic arithmetic operations like
 ## Screenshots 📷
 <p float="left">
 	<img src = "ui.png" width="200">
+	<img src = "ui2.png" width="200">
 </p>
