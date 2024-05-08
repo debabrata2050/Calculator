@@ -7,6 +7,7 @@ public class UInew extends javax.swing.JFrame {
     private double num1 = Double.MIN_VALUE, num2 = Double.MIN_VALUE;
     char operators = 'n';
     boolean opUse = false;
+    boolean sUse = false;
 
     public UInew() {
         initComponents();
@@ -32,7 +33,9 @@ public class UInew extends javax.swing.JFrame {
         if (opUse == true) {
             clear();
         }
-       
+        if(num1 != Double.MIN_VALUE && operators != 'n'){
+            sUse=true;
+        }
         if (number.equals(".")) {
             display_lb.setText(disp() + number);
         } else if (disp().equals("0")) {
@@ -51,9 +54,9 @@ public class UInew extends javax.swing.JFrame {
             case 2 ->
                 num2 = Double.MIN_VALUE;
             default -> {
-                num1 = Double.MIN_VALUE;
-                num2 = Double.MIN_VALUE;
+                num1 = num2 = Double.MIN_VALUE;
                 operators =  'n';
+                sUse = opUse = false;
             }
         }
     }
@@ -73,13 +76,15 @@ public class UInew extends javax.swing.JFrame {
         }
         display_lb.setText(res);
     }
-
+    
+    //Rest operator code (addition, subtraction, multiply and division)
     //To get input for num1 and operator
     public void operator(char op) {
         label(1);
-
-       
-            if (num1 == Double.MIN_VALUE) {
+        if(sUse){
+            equalOp();
+        }
+        if (num1 == Double.MIN_VALUE) {
                 num1 = Double.parseDouble(disp());
             }
             operators = op;
@@ -88,6 +93,7 @@ public class UInew extends javax.swing.JFrame {
 
             display_lb2.setText(numb1 + " " + op);
             resetValues(2);
+            
             opUse = true;
         
     }
@@ -118,10 +124,11 @@ public class UInew extends javax.swing.JFrame {
         String numb2 = Double.toString(num2);
         numb2 = operation.removeDot(numb2);
 
-        display_lb2.setText(numb1 + " " + operators + " " + numb2);
+        display_lb2.setText(numb1 + " " + operators + " " + numb2 + " = ");
         clear();
         dispNum(result);
         num1 = res;
+        sUse = false;
     }
 
     @SuppressWarnings("unchecked")
@@ -164,7 +171,7 @@ public class UInew extends javax.swing.JFrame {
         jPanel20 = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
         jPanel21 = new javax.swing.JPanel();
-        jLabel31 = new javax.swing.JLabel();
+        backspace = new javax.swing.JLabel();
         display_lb = new javax.swing.JLabel();
         display_lb2 = new javax.swing.JLabel();
 
@@ -186,6 +193,12 @@ public class UInew extends javax.swing.JFrame {
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel1MouseExited(evt);
             }
         });
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 140));
@@ -548,26 +561,26 @@ public class UInew extends javax.swing.JFrame {
         jPanel21.setBackground(new java.awt.Color(54, 55, 70));
         jPanel21.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel31.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel31.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel31.setText("<=");
-        jLabel31.addMouseListener(new java.awt.event.MouseAdapter() {
+        backspace.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        backspace.setForeground(new java.awt.Color(255, 255, 255));
+        backspace.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        backspace.setText("<=");
+        backspace.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel31MouseClicked(evt);
+                backspaceMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel31MouseEntered(evt);
+                backspaceMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel31MouseExited(evt);
+                backspaceMouseExited(evt);
             }
         });
-        jPanel21.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 70));
+        jPanel21.add(backspace, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 70));
 
         jPanel2.add(jPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, 70, 70));
 
-        display_lb.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        display_lb.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         display_lb.setForeground(new java.awt.Color(255, 255, 255));
         display_lb.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         display_lb.setText("0");
@@ -740,17 +753,17 @@ public class UInew extends javax.swing.JFrame {
         operation.num_resetcolor(jPanel18);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel29MouseExited
 
-    private void jLabel31MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel31MouseEntered
+    private void backspaceMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backspaceMouseEntered
         operation.num_setcolor(jPanel21);        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel31MouseEntered
+    }//GEN-LAST:event_backspaceMouseEntered
 
-    private void jLabel31MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel31MouseExited
+    private void backspaceMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backspaceMouseExited
         operation.num_resetcolor(jPanel21);        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel31MouseExited
+    }//GEN-LAST:event_backspaceMouseExited
 
-    private void jLabel31MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel31MouseClicked
+    private void backspaceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backspaceMouseClicked
         cBack();
-    }//GEN-LAST:event_jLabel31MouseClicked
+    }//GEN-LAST:event_backspaceMouseClicked
 
     private void jLabel24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MouseClicked
         resetValues(0);
@@ -794,6 +807,14 @@ public class UInew extends javax.swing.JFrame {
         equalOp();        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel1MouseClicked
 
+    private void jLabel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseEntered
+operation.equal_setcolor(jPanel1);
+    }//GEN-LAST:event_jLabel1MouseEntered
+
+    private void jLabel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseExited
+operation.equal_resetcolor(jPanel1);
+    }//GEN-LAST:event_jLabel1MouseExited
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -828,6 +849,7 @@ public class UInew extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel backspace;
     private javax.swing.JLabel display_lb;
     private javax.swing.JLabel display_lb2;
     private javax.swing.JLabel jLabel1;
@@ -842,7 +864,6 @@ public class UInew extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;

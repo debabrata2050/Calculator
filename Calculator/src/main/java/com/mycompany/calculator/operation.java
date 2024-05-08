@@ -14,6 +14,15 @@ public class operation {
         panel.setBackground(new Color(54,55,70));
     }
     
+    public static void equal_setcolor(JPanel panel)
+    {
+        panel.setBackground(new Color(206,151,0));
+    }
+    public static void equal_resetcolor(JPanel panel)
+    {
+        panel.setBackground(new Color(255,187,0));
+    }
+    
     //Remove (.0) from the last of every number where it is not needed
     public static String removeDot(String arg){
         int r = arg.indexOf(".0");
